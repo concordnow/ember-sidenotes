@@ -1,13 +1,16 @@
 {
   "name": "ember-sidenotes",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Ember addon inspired by curvenote/sidenotes which position vertically cards next to targetted text",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "sidenotes",
+    "position",
+    "ember"
   ],
-  "repository": "",
+  "repository": "https://github.com/concordnow/ember-sidenotes",
   "license": "MIT",
-  "author": "",
+  "author": "Concord Worlwide Inc.",
   "directories": {
     "doc": "doc",
     "test": "tests"
