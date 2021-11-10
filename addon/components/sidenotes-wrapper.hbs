@@ -1,0 +1,18 @@
+<div
+  ...attributes
+  {{did-update this.onSelectedSidenoteIdUpdate @selectedSidenoteId}}
+>
+  {{#each @items as |item|}}
+    {{yield
+      (component
+        'sidenote'
+        onRegister=this.onRegisterSidenote
+        onResize=this.onResizeSidenote
+        onSelect=this.onSelectSidenote
+        onUnselect=this.onUnselectSidenote
+        selectedSidenoteId=this._selectedSidenoteId
+      )
+      item
+    }}
+  {{/each}}
+</div>

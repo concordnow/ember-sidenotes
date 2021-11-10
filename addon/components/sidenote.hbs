@@ -1,0 +1,17 @@
+<div
+  ...attributes
+  {{did-insert this.onDidInsert}}
+  {{observe-resize @onResize}}
+>{{yield
+    (hash
+      isActive=this.isActive
+      select=(fn
+        @onSelect (hash id=@id offsetY=@offsetY data=@data element=this.element)
+      )
+      unselect=(fn
+        @onUnselect
+        (hash id=@id offsetY=@offsetY data=@data element=this.element)
+      )
+    )
+  }}
+</div>
