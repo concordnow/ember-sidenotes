@@ -1,4 +1,5 @@
 <div
+  class='sidenote {{if this.isActive 'sidenote--active'}}'
   ...attributes
   {{did-insert this.onDidInsert}}
   {{observe-resize @onResize}}
