@@ -1,0 +1,17 @@
+#container {
+  display: flex;
+  margin: auto;
+}
+
+#text-container {
+  width: 500px;
+}
+
+#text-container span {
+  color: blue;
+}
+
+.sidenote {
+  width: 200px;
+  background-color: rgb(214, 214, 214);
+}
