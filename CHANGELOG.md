@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2021-11-22
+
 ### Added
 
 - First implementation
 
-[Unreleased]: https://github.com/concordnow/ember-sidenotes/compare/null...HEAD
+[Unreleased]: https://github.com/concordnow/ember-sidenotes/compare/v1.0.0...HEAD
+
+[1.0.0]: https://github.com/concordnow/ember-sidenotes/compare/null...v1.0.0

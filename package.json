@@ -1,6 +1,6 @@
 {
   "name": "ember-sidenotes",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Ember addon inspired by curvenote/sidenotes which position vertically cards next to targetted text",
   "keywords": [
     "ember-addon",
