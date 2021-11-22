@@ -10,8 +10,8 @@ module('Unit | Utility | notes-placement', function () {
 
     const idealPlacement = getNotesIdealPlacement(notes, 1, 0);
     const [placementNote1, placementNote2] = idealPlacement;
-    assert.equal(placementNote1.top, notes[0].offsetY);
-    assert.equal(placementNote2.top, notes[1].offsetY);
+    assert.strictEqual(placementNote1.top, notes[0].offsetY);
+    assert.strictEqual(placementNote2.top, notes[1].offsetY);
   });
 
   test('it positions notes below each other when there are some collisions', function (assert) {
@@ -25,16 +25,16 @@ module('Unit | Utility | notes-placement', function () {
     const idealPlacement = getNotesIdealPlacement(notes, 2, 0);
     const [placementNote1, placementNote2, placementNote3, placementNote4] =
       idealPlacement;
-    assert.equal(placementNote2.top, notes[1].offsetY);
-    assert.equal(
+    assert.strictEqual(placementNote2.top, notes[1].offsetY);
+    assert.strictEqual(
       placementNote1.top,
       placementNote2.top - notes[0].element.offsetHeight
     );
-    assert.equal(
+    assert.strictEqual(
       placementNote3.top,
       placementNote2.top + notes[1].element.offsetHeight
     );
-    assert.equal(placementNote4.top, notes[3].offsetY);
+    assert.strictEqual(placementNote4.top, notes[3].offsetY);
   });
 
   test('it positions notes below each other with gutter when there are some collisions', function (assert) {
@@ -49,15 +49,15 @@ module('Unit | Utility | notes-placement', function () {
     const idealPlacement = getNotesIdealPlacement(notes, 2, gutter);
     const [placementNote1, placementNote2, placementNote3, placementNote4] =
       idealPlacement;
-    assert.equal(placementNote2.top, notes[1].offsetY);
-    assert.equal(
+    assert.strictEqual(placementNote2.top, notes[1].offsetY);
+    assert.strictEqual(
       placementNote1.top,
       placementNote2.top - notes[0].element.offsetHeight - gutter
     );
-    assert.equal(
+    assert.strictEqual(
       placementNote3.top,
       placementNote2.top + notes[1].element.offsetHeight + gutter
     );
-    assert.equal(placementNote4.top, notes[3].offsetY);
+    assert.strictEqual(placementNote4.top, notes[3].offsetY);
   });
 });

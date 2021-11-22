@@ -27,13 +27,17 @@ module('Integration | Component | sidenote', function (hooks) {
     const done = assert.async();
 
     this.set('onRegister', ({ element, id, offsetY, data }) => {
-      assert.equal(this.note.id, id, 'onRegister receives correct id');
-      assert.equal(
+      assert.strictEqual(this.note.id, id, 'onRegister receives correct id');
+      assert.strictEqual(
         this.note.offsetY,
         offsetY,
         'onRegister receives correct offsetY'
       );
-      assert.equal(this.note.data, data, 'onRegister receives correct data');
+      assert.strictEqual(
+        this.note.data,
+        data,
+        'onRegister receives correct data'
+      );
       assert.ok(element, 'onRegister receives a truthy element');
 
       done();
