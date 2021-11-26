@@ -2,6 +2,7 @@
   class="sidenotes-wrapper"
   ...attributes
   {{did-update this.onSelectedSidenoteIdUpdate @selectedSidenoteId}}
+  {{did-update this.onItemsDidChange @items}}
 >
   {{#each @items key=this.key as |item|}}
     {{yield

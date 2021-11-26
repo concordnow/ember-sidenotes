@@ -7,9 +7,9 @@ import { getNotesIdealPlacement } from '../utils/notes-placement';
 
 export default class SidenotesWrapperComponent extends Component {
   @tracked _selectedSidenoteId = null;
-  @tracked _alignedSidenoteId = null;
+  _alignedSidenoteId = null;
 
-  @tracked notes = [];
+  notes = [];
 
   get gutter() {
     return this.args.gutter ?? 0;
@@ -42,6 +42,8 @@ export default class SidenotesWrapperComponent extends Component {
       this.gutter
     );
 
+    console.error({ fn: 'placeNotes', idealPlacement });
+
     idealPlacement.forEach(({ top, note: { element } }) => {
       element.style.top = `${top}px`;
     });
@@ -66,6 +68,15 @@ export default class SidenotesWrapperComponent extends Component {
     if (selectedSidenoteId) {
       this._alignedSidenoteId = selectedSidenoteId;
     }
+    this.placeNotesDebounce();
+  }
+
+  @action
+  onItemsDidChange() {
+    this.notes = this.notes.filter(
+      ({ item }) => this.indexOfItem(this.args.items, item) > -1
+    );
+
     this.placeNotesDebounce();
   }
 
