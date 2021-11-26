@@ -204,4 +204,48 @@ module('Integration | Component | sidenotes-wrapper', function (hooks) {
       top: `${this.items[1].y + elementHeight}px`,
     });
   });
+
+  test('it triggers placement on items change', async function (assert) {
+    this.set('onSidenotesMovedCalled', false);
+    this.set('onSidenotesMoved', () => {
+      this.set('onSidenotesMovedCalled', true);
+    });
+
+    this.set('style', htmlSafe(`height: 100px;`));
+
+    await render(hbs`
+      <SidenotesWrapper
+        @items={{this.items}}
+        @onSidenotesMoved={{this.onSidenotesMoved}}
+        as |Sidenote item|
+      >
+        <Sidenote
+          data-sidenote-id={{item.id}}
+          style={{this.style}}
+          @id={{item.id}}
+          @offsetY={{item.y}}
+          @data={{item.data}}
+        />
+      </SidenotesWrapper>
+    `);
+
+    const element = this.items[2];
+
+    await waitUntil(() => this.onSidenotesMovedCalled);
+    this.set('onSidenotesMovedCalled', false);
+    assert.dom('[data-sidenote-id="3"]').doesNotHaveStyle({
+      top: `${element.y}px`,
+    });
+
+    this.set(
+      'items',
+      this.items.filter(({ id }) => id !== 2)
+    );
+
+    await waitUntil(() => this.onSidenotesMovedCalled);
+    this.set('onSidenotesMovedCalled', false);
+    assert.dom('[data-sidenote-id="3"]').hasStyle({
+      top: `${element.y}px`,
+    });
+  });
 });
