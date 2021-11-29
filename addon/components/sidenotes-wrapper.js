@@ -42,8 +42,6 @@ export default class SidenotesWrapperComponent extends Component {
       this.gutter
     );
 
-    console.error({ fn: 'placeNotes', idealPlacement });
-
     idealPlacement.forEach(({ top, note: { element } }) => {
       element.style.top = `${top}px`;
     });
@@ -53,7 +51,16 @@ export default class SidenotesWrapperComponent extends Component {
 
   @action
   onRegisterSidenote(note) {
-    this.notes = [...this.notes, note];
+    const index = this.notes.findIndex(({ id }) => id === note.id);
+
+    let notes = [...this.notes];
+    if (index > -1) {
+      notes[index] = note;
+    } else {
+      notes.push(note);
+    }
+
+    this.notes = [...notes];
 
     if (this.notes.length === this.args.items.length) {
       this.placeNotesDebounce();
