@@ -50,7 +50,9 @@ export default class SidenotesWrapperComponent extends Component {
   }
 
   @action
-  onRegisterSidenote(note) {
+  onRegisterSidenote(item, note) {
+    note.item = item;
+
     const index = this.notes.findIndex(({ id }) => id === note.id);
 
     let notes = [...this.notes];
@@ -60,7 +62,14 @@ export default class SidenotesWrapperComponent extends Component {
       notes.push(note);
     }
 
-    this.notes = [...notes];
+    this.notes = notes.sort(({ item: item1 }, { item: item2 }) => {
+      const index1 = this.indexOfItem(this.args.items, item1);
+      const index2 = this.indexOfItem(this.args.items, item2);
+
+      if (index1 === index2) return 0;
+
+      return index1 < index2 ? -1 : 1;
+    });
 
     if (this.notes.length === this.args.items.length) {
       this.placeNotesDebounce();

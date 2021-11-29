@@ -8,7 +8,7 @@
     {{yield
       (component
         "sidenote"
-        onRegister=this.onRegisterSidenote
+        onRegister=(fn this.onRegisterSidenote item)
         onResize=this.onResizeSidenote
         onSelect=this.onSelectSidenote
         onUnselect=this.onUnselectSidenote
