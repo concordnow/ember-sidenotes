@@ -2,7 +2,7 @@
   class="sidenote {{if this.isActive "sidenote--active"}}"
   ...attributes
   {{did-insert this.onDidInsert}}
-  {{observe-resize @onResize}}
+  {{observe-resize (fn @onResize @id)}}
 >{{yield
     (hash
       isActive=this.isActive
