@@ -229,10 +229,11 @@ module('Integration | Component | sidenotes-wrapper', function (hooks) {
       </SidenotesWrapper>
     `);
 
-    const element = this.items[2];
-
     await waitUntil(() => this.onSidenotesMovedCalled);
     this.set('onSidenotesMovedCalled', false);
+
+    const element = this.items[2];
+
     assert.dom('[data-sidenote-id="3"]').doesNotHaveStyle({
       top: `${element.y}px`,
     });
@@ -247,5 +248,59 @@ module('Integration | Component | sidenotes-wrapper', function (hooks) {
     assert.dom('[data-sidenote-id="3"]').hasStyle({
       top: `${element.y}px`,
     });
+  });
+
+  test('it replaces sidenote with same id', async function (assert) {
+    await render(hbs`
+      <SidenotesWrapper
+        @items={{this.items}}
+        as |Sidenote item|
+      >
+        <Sidenote
+          data-sidenote-id={{item.id}}
+          @id={{item.id}}
+          @offsetY={{item.y}}
+          @data={{item.data}}
+        >
+          Dummy text
+        </Sidenote>
+      </SidenotesWrapper>
+    `);
+
+    const { id } = this.items[0];
+
+    assert.dom(`[data-sidenote-id="${id}"]`).exists({ count: 1 });
+
+    this.set('items', [
+      ...this.items.filter(({ id: itemId }) => itemId !== id),
+      { id, y: 100, data: null },
+    ]);
+
+    assert.dom(`[data-sidenote-id="${id}"]`).exists({ count: 1 });
+  });
+
+  test('it keeps @items order among notes', async function (assert) {
+    this.set('items', [
+      { id: 1, y: 300 },
+      { id: 2, y: 120 },
+    ]);
+
+    await render(hbs`
+      <SidenotesWrapper
+        @items={{this.items}}
+        as |Sidenote item|
+      >
+        <Sidenote
+          data-sidenote
+          @id={{item.id}}
+          @offsetY={{item.y}}
+        >
+          Dummy text
+        </Sidenote>
+      </SidenotesWrapper>
+    `);
+
+    const sidenotes = document.querySelectorAll('[data-sidenote]');
+    assert.ok(sidenotes[0].offsetTop < sidenotes[1].offsetTop);
   });
 });
