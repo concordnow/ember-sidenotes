@@ -19,6 +19,10 @@ export default class SidenotesWrapperComponent extends Component {
     return this.args.selectedSidenoteId !== undefined;
   }
 
+  get key() {
+    return this.args.key ?? '@identity';
+  }
+
   constructor() {
     super(...arguments);
 

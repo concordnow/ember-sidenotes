@@ -3,7 +3,7 @@
   ...attributes
   {{did-update this.onSelectedSidenoteIdUpdate @selectedSidenoteId}}
 >
-  {{#each @items as |item|}}
+  {{#each @items key=this.key as |item|}}
     {{yield
       (component
         "sidenote"
