@@ -134,6 +134,7 @@ export default class MyComponent extends Component {
 | activeSidenoteId  | Number | null    | Controlled     | Selected sidenote id (presence of this property will enable controlled mode)                                       |
 | defaultSidenoteId | Number | null    | Non-controlled | Default selected sidenote id on wrapper load                                                                       |
 | gutter            | Number | 0       | Both           | Vertical spacing added between every sidenotes                                                                     |
+| key            | String | '@identity'       | Both           | Key passed to `#each` helper when iterating over `@items`. It will be used to determine if render is needed on change (See [#each doc](https://api.emberjs.com/ember/release/classes/Ember.Templates.helpers/methods/if?anchor=each) cf. 'Specifying keys')                                                                     |
 | items             | Array  | -       | Both           | List of items corresponding to wanted sidenotes                                                                    |
 | onSelect          | Action | -       | Both           | Action raised when using `select` exposed action on `Sidenote` component                                           |
 | onSidenotesMoved  | Action | -       | Both           | Action raised after sidenotes finished moving (called after load, selection, unselection, or sidenote size change) |
