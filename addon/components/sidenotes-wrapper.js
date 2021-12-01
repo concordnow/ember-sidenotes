@@ -94,4 +94,13 @@ export default class SidenotesWrapperComponent extends Component {
     }
     this.args.onUnselect?.(...arguments);
   }
+
+  indexOfItem(array, obj) {
+    return array.findIndex((item) => this.areItemsEqual(item, obj));
+  }
+
+  areItemsEqual(obj1, obj2) {
+    const { key } = this.args;
+    return key ? obj1[key] === obj2[key] : obj1 === obj2;
+  }
 }
