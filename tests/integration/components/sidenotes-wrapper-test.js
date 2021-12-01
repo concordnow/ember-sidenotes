@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render, waitUntil } from '@ember/test-helpers';
+import { click, render, settled, waitUntil } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { htmlSafe } from '@ember/template';
 
@@ -302,5 +302,62 @@ module('Integration | Component | sidenotes-wrapper', function (hooks) {
 
     const sidenotes = document.querySelectorAll('[data-sidenote]');
     assert.ok(sidenotes[0].offsetTop < sidenotes[1].offsetTop);
+  });
+
+  test('it works with different identifier key', async function (assert) {
+    this.set('items', [{ identifier: 1, y: 300 }]);
+
+    await render(hbs`
+      <SidenotesWrapper
+        @items={{this.items}}
+        as |Sidenote item|
+      >
+        <Sidenote
+          data-sidenote-id={{item.identifier}}
+          @id={{item.identifier}}
+          @offsetY={{item.y}}
+        >
+          Dummy text
+        </Sidenote>
+      </SidenotesWrapper>
+    `);
+
+    assert.dom('[data-sidenote-id="1"]').hasStyle({
+      top: `300px`,
+    });
+  });
+
+  test('it works with different identifier key adding a new element', async function (assert) {
+    this.set('items', [
+      { identifier: 1, y: 300 },
+      { identifier: 2, y: 400 },
+    ]);
+
+    await render(hbs`
+      <SidenotesWrapper
+        @items={{this.items}}
+        @onSidenotesMoved={{this.onSidenotesMoved}}
+        as |Sidenote item|
+      >
+        <Sidenote
+          data-sidenote-id={{item.identifier}}
+          @id={{item.identifier}}
+          @offsetY={{item.y}}
+        >
+          Dummy text
+        </Sidenote>
+      </SidenotesWrapper>
+    `);
+
+    const items = [...this.items];
+    items.splice(1, 0, { identifier: 3, y: 350 });
+
+    this.set('items', [...items]);
+
+    await settled();
+
+    const sidenotes = document.querySelectorAll('[data-sidenote-id]');
+    assert.ok(sidenotes[0].offsetTop < sidenotes[1].offsetTop);
+    assert.ok(sidenotes[1].offsetTop < sidenotes[2].offsetTop);
   });
 });
