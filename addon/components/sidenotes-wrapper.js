@@ -44,6 +44,7 @@ export default class SidenotesWrapperComponent extends Component {
 
     idealPlacement.forEach(({ top, note: { element } }) => {
       element.style.top = `${top}px`;
+      element.dataset.ready = true;
     });
 
     this.args.onSidenotesMoved?.();
