@@ -44,6 +44,10 @@ export default class SidenotesWrapperComponent extends Component {
 
     idealPlacement.forEach(({ top, note: { element } }) => {
       element.style.top = `${top}px`;
+
+      if (!element.classList.contains('sidenote--ready')) {
+        element.classList.add('sidenote--ready');
+      }
     });
 
     this.args.onSidenotesMoved?.();
