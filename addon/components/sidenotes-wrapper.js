@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { debounce } from '@ember/runloop';
+import { debounce, next } from '@ember/runloop';
 
 import { getNotesIdealPlacement } from '../utils/notes-placement';
 
@@ -44,6 +44,12 @@ export default class SidenotesWrapperComponent extends Component {
 
     idealPlacement.forEach(({ top, note: { element } }) => {
       element.style.top = `${top}px`;
+    });
+
+    next(this, () => {
+      idealPlacement.forEach(({ note: { element } }) => {
+        element.dataset.ready = true;
+      });
     });
 
     this.args.onSidenotesMoved?.();
