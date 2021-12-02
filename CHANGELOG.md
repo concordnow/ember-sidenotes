@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Triggers placement on @items change
+- Add key argument passed to #each helper
+- Keep @items ordering in sidenotes display
+
 ## [1.0.0] - 2021-11-22
 
 ### Added
