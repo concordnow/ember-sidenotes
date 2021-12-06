@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2021-12-06
+
 - Triggers placement on @items change
 - Add key argument passed to #each helper
 - Keep @items ordering in sidenotes display
@@ -17,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - First implementation
 
-[Unreleased]: https://github.com/concordnow/ember-sidenotes/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/concordnow/ember-sidenotes/compare/v1.1.0...HEAD
 
+[1.1.0]: https://github.com/concordnow/ember-sidenotes/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/concordnow/ember-sidenotes/compare/null...v1.0.0
