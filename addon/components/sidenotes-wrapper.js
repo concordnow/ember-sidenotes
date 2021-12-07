@@ -100,7 +100,7 @@ export default class SidenotesWrapperComponent extends Component {
   @action
   onResizeSidenote(id) {
     const { item } = this.notes.find(({ id: noteId }) => id === noteId);
-    if (this.indexOfItem(this.args.items, item)) {
+    if (this.indexOfItem(this.args.items, item) > -1) {
       this.placeNotesDebounce();
     }
   }
