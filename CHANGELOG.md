@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Fix version mistake (uncompleted v1.1.0 published)
+- Fix preventing resize for absent item
+
 ## [1.1.0] - 2021-12-06
 
 - Triggers placement on @items change
