@@ -10,10 +10,9 @@ export default class SidenoteComponent extends Component {
   }
 
   @action
-  onDidInsert(element) {
+  onDidInsert(element, [id, offsetY, data]) {
     this.element = element;
 
-    const { id, offsetY, data } = this.args;
     this.args.onRegister({ element, id, offsetY, data });
   }
 }

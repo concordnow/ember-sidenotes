@@ -360,4 +360,100 @@ module('Integration | Component | sidenotes-wrapper', function (hooks) {
     assert.ok(sidenotes[0].offsetTop < sidenotes[1].offsetTop);
     assert.ok(sidenotes[1].offsetTop < sidenotes[2].offsetTop);
   });
+
+  test('it triggers placement with key and updating offset', async function (assert) {
+    this.set('items', [{ id: 1, y: 300 }]);
+
+    await render(hbs`
+      <SidenotesWrapper
+        @items={{this.items}}
+        @key='id'
+        @onSidenotesMoved={{this.onSidenotesMoved}}
+        as |Sidenote item|
+      >
+        <Sidenote
+          data-sidenote-id={{item.id}}
+          @id={{item.id}}
+          @offsetY={{item.y}}
+        >
+          Dummy text
+        </Sidenote>
+      </SidenotesWrapper>
+    `);
+
+    assert.dom('[data-sidenote-id="1"]').hasStyle({
+      top: `${this.items[0].y}px`,
+    });
+
+    this.set('items', [{ id: 1, y: 400 }]);
+
+    await settled();
+
+    assert.dom('[data-sidenote-id="1"]').hasStyle({
+      top: `${this.items[0].y}px`,
+    });
+  });
+
+  test('it triggers placement with key and updating offset with custom property', async function (assert) {
+    this.set('items', [{ id: 1, offset_y: 300 }]);
+
+    await render(hbs`
+      <SidenotesWrapper
+        @items={{this.items}}
+        @key='id'
+        @onSidenotesMoved={{this.onSidenotesMoved}}
+        as |Sidenote item|
+      >
+        <Sidenote
+          data-sidenote-id={{item.id}}
+          @id={{item.id}}
+          @offsetY={{item.offset_y}}
+        >
+          Dummy text
+        </Sidenote>
+      </SidenotesWrapper>
+    `);
+
+    assert.dom('[data-sidenote-id="1"]').hasStyle({
+      top: `${this.items[0].offset_y}px`,
+    });
+
+    this.set('items', [{ id: 1, offset_y: 400 }]);
+
+    await settled();
+
+    assert.dom('[data-sidenote-id="1"]').hasStyle({
+      top: `${this.items[0].offset_y}px`,
+    });
+  });
+
+  test('it updates model with key and updating data', async function (assert) {
+    this.set('items', [{ id: 1, y: 300, data: 'foo' }]);
+
+    await render(hbs`
+      <SidenotesWrapper
+        @items={{this.items}}
+        @key='id'
+        @onSidenotesMoved={{this.onSidenotesMoved}}
+        as |Sidenote item|
+      >
+        <Sidenote
+          data-sidenote-id={{item.id}}
+          @id={{item.id}}
+          @offsetY={{item.y}}
+          @data={{item.data}}
+        >
+          {{item.data}}
+        </Sidenote>
+      </SidenotesWrapper>
+    `);
+
+    assert.dom('[data-sidenote-id="1"]').hasText(this.items[0].data);
+
+    this.set('items', [{ id: 1, y: 300, data: 'bar' }]);
+
+    await settled();
+
+    assert.dom('[data-sidenote-id="1"]').hasText(this.items[0].data);
+  });
 });

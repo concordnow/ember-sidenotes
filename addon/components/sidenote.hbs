@@ -1,7 +1,8 @@
 <div
   class="sidenote {{if this.isActive "sidenote--active"}}"
   ...attributes
-  {{did-insert this.onDidInsert}}
+  {{did-insert this.onDidInsert @id @offsetY @data}}
+  {{did-update this.onDidInsert @id @offsetY @data}}
   {{observe-resize (fn @onResize @id)}}
 >{{yield
     (hash
