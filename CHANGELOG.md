@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Fix reacting to offsetY changes while using @key argument on the wrapper
+
 ## [1.2.0] - 2021-12-07
 
 ### Fixed
