@@ -60,17 +60,10 @@ export default class SidenotesWrapperComponent extends Component {
     if (index > -1) {
       notes[index] = note;
     } else {
-      notes.push(note);
+      notes.splice(this.indexOfItem(this.args.items, item), 0, note);
     }
 
-    this.notes = notes.sort(({ item: item1 }, { item: item2 }) => {
-      const index1 = this.indexOfItem(this.args.items, item1);
-      const index2 = this.indexOfItem(this.args.items, item2);
-
-      if (index1 === index2) return 0;
-
-      return index1 < index2 ? -1 : 1;
-    });
+    this.notes = notes;
 
     if (this.notes.length === this.args.items.length) {
       this.placeNotesDebounce();
