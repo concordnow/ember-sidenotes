@@ -4,17 +4,15 @@
   {{did-update this.onSelectedSidenoteIdUpdate @selectedSidenoteId}}
   {{did-update this.onItemsDidChange @items}}
 >
-  {{#each @items key=this.key as |item|}}
-    {{yield
-      (component
-        "sidenote"
-        onRegister=(fn this.onRegisterSidenote item)
-        onResize=this.onResizeSidenote
-        onSelect=this.onSelectSidenote
-        onUnselect=this.onUnselectSidenote
-        selectedSidenoteId=this._selectedSidenoteId
-      )
-      item
-    }}
-  {{/each}}
+  {{yield
+    @items
+    (hash
+      onRegister=this.onRegisterSidenote
+      onResize=this.onResizeSidenote
+      onSelect=this.onSelectSidenote
+      onUnselect=this.onUnselectSidenote
+      selectedSidenoteId=this._selectedSidenoteId
+    )
+    (component "sidenote")
+  }}
 </div>
