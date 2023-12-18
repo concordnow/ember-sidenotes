@@ -3,13 +3,18 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { debounce } from '@ember/runloop';
 
-import { getNotesIdealPlacement } from '../utils/notes-placement';
+import {
+  getNotesIdealPlacement,
+  getNotesIdealPlacementPrev,
+} from '../utils/notes-placement';
 
 export default class SidenotesWrapperComponent extends Component {
   @tracked _selectedSidenoteId = null;
   _alignedSidenoteId = null;
 
   notes = [];
+
+  @tracked updatedNotes = [];
 
   get gutter() {
     return this.args.gutter ?? 0;
@@ -46,6 +51,16 @@ export default class SidenotesWrapperComponent extends Component {
       element.style.top = `${top}px`;
       element.dataset.ready = true;
     });
+
+    this.updatedNotes = getNotesIdealPlacementPrev(
+      this.args.items,
+      this._alignedSidenoteId,
+      this.gutter,
+      100
+    ).map(({ top, note }) => ({
+      top,
+      ...note,
+    }));
 
     this.args.onSidenotesMoved?.();
   }
