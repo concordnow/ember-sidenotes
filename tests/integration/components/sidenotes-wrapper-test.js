@@ -479,8 +479,6 @@ module('Integration | Component | sidenotes-wrapper', function (hooks) {
       </SidenotesWrapper>
     `);
 
-    await settled();
-
     assert.dom('[data-sidenote-id="1"]').hasStyle({
       top: '100px',
     });
