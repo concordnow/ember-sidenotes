@@ -81,4 +81,17 @@ module('Unit | Utility | notes-placement', function () {
       'second note keeps its offsetY (no collision)'
     );
   });
+
+  test('it preserves offsetY = 0 for a single note (current behavior)', function (assert) {
+    const notes = [{ id: 1, offsetY: 0, element: { offsetHeight: 50 } }];
+
+    const idealPlacement = getNotesIdealPlacement(notes, 1, 0);
+    const [placementNote1] = idealPlacement;
+
+    assert.strictEqual(
+      placementNote1.top,
+      0,
+      'single note with offsetY=0 is placed at top=0'
+    );
+  });
 });
