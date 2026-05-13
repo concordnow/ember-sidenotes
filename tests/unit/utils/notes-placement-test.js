@@ -82,6 +82,8 @@ module('Unit | Utility | notes-placement', function () {
     );
   });
 
+  // `getNotesIdealPlacement` uses `top || offsetY` which short-circuits on 0.
+  // This test pins the current behavior (passes by coincidence — keep as regression net).
   test('it preserves offsetY = 0 for a single note (current behavior)', function (assert) {
     const notes = [{ id: 1, offsetY: 0, element: { offsetHeight: 50 } }];
 
