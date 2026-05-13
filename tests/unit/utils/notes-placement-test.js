@@ -60,4 +60,25 @@ module('Unit | Utility | notes-placement', function () {
     );
     assert.strictEqual(placementNote4.top, notes[3].offsetY);
   });
+
+  test('it falls back to first note when activeNoteId is not found', function (assert) {
+    const notes = [
+      { id: 1, offsetY: 100, element: { offsetHeight: 50 } },
+      { id: 2, offsetY: 300, element: { offsetHeight: 50 } },
+    ];
+
+    const idealPlacement = getNotesIdealPlacement(notes, 999, 0);
+    const [placementNote1, placementNote2] = idealPlacement;
+
+    assert.strictEqual(
+      placementNote1.top,
+      notes[0].offsetY,
+      'first note keeps its offsetY when used as fallback anchor'
+    );
+    assert.strictEqual(
+      placementNote2.top,
+      notes[1].offsetY,
+      'second note keeps its offsetY (no collision)'
+    );
+  });
 });
