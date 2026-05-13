@@ -456,4 +456,36 @@ module('Integration | Component | sidenotes-wrapper', function (hooks) {
 
     assert.dom('[data-sidenote-id="1"]').hasText(this.items[0].data);
   });
+
+  test('it propagates @gutter to placement', async function (assert) {
+    this.set('items', [
+      { id: 1, y: 100 },
+      { id: 2, y: 110 },
+    ]);
+    this.set('style', htmlSafe('height: 50px;'));
+
+    await render(hbs`
+      <SidenotesWrapper
+        @items={{this.items}}
+        @gutter={{20}}
+        as |Sidenote item|
+      >
+        <Sidenote
+          data-sidenote-id={{item.id}}
+          style={{this.style}}
+          @id={{item.id}}
+          @offsetY={{item.y}}
+        />
+      </SidenotesWrapper>
+    `);
+
+    await settled();
+
+    assert.dom('[data-sidenote-id="1"]').hasStyle({
+      top: '100px',
+    });
+    assert.dom('[data-sidenote-id="2"]').hasStyle({
+      top: '170px',
+    });
+  });
 });
