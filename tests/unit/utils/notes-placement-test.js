@@ -28,11 +28,11 @@ module('Unit | Utility | notes-placement', function () {
     assert.strictEqual(placementNote2.top, notes[1].offsetY);
     assert.strictEqual(
       placementNote1.top,
-      placementNote2.top - notes[0].element.offsetHeight
+      placementNote2.top - notes[0].element.offsetHeight,
     );
     assert.strictEqual(
       placementNote3.top,
-      placementNote2.top + notes[1].element.offsetHeight
+      placementNote2.top + notes[1].element.offsetHeight,
     );
     assert.strictEqual(placementNote4.top, notes[3].offsetY);
   });
@@ -52,11 +52,11 @@ module('Unit | Utility | notes-placement', function () {
     assert.strictEqual(placementNote2.top, notes[1].offsetY);
     assert.strictEqual(
       placementNote1.top,
-      placementNote2.top - notes[0].element.offsetHeight - gutter
+      placementNote2.top - notes[0].element.offsetHeight - gutter,
     );
     assert.strictEqual(
       placementNote3.top,
-      placementNote2.top + notes[1].element.offsetHeight + gutter
+      placementNote2.top + notes[1].element.offsetHeight + gutter,
     );
     assert.strictEqual(placementNote4.top, notes[3].offsetY);
   });
@@ -73,12 +73,12 @@ module('Unit | Utility | notes-placement', function () {
     assert.strictEqual(
       placementNote1.top,
       notes[0].offsetY,
-      'first note keeps its offsetY when used as fallback anchor'
+      'first note keeps its offsetY when used as fallback anchor',
     );
     assert.strictEqual(
       placementNote2.top,
       notes[1].offsetY,
-      'second note keeps its offsetY (no collision)'
+      'second note keeps its offsetY (no collision)',
     );
   });
 
@@ -93,7 +93,7 @@ module('Unit | Utility | notes-placement', function () {
     assert.strictEqual(
       placementNote1.top,
       0,
-      'single note with offsetY=0 is placed at top=0'
+      'single note with offsetY=0 is placed at top=0',
     );
   });
 });

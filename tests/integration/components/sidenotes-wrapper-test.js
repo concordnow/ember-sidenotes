@@ -240,7 +240,7 @@ module('Integration | Component | sidenotes-wrapper', function (hooks) {
 
     this.set(
       'items',
-      this.items.filter(({ id }) => id !== 2)
+      this.items.filter(({ id }) => id !== 2),
     );
 
     await waitUntil(() => this.onSidenotesMovedCalled);
