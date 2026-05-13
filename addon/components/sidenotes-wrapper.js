@@ -32,6 +32,7 @@ export default class SidenotesWrapperComponent extends Component {
   }
 
   placeNotesDebounce() {
+    // eslint-disable-next-line ember/no-runloop -- legacy @ember/runloop debounce, candidate for migration to ember-lifeline
     debounce(this, this.placeNotes, 0);
   }
 

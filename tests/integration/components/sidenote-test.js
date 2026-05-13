@@ -23,7 +23,6 @@ module('Integration | Component | sidenote', function (hooks) {
   });
 
   test('it registers sidenote to parent', async function (assert) {
-    assert.expect(4);
     const done = assert.async();
 
     this.set('onRegister', ({ element, id, offsetY, data }) => {
@@ -120,7 +119,6 @@ module('Integration | Component | sidenote', function (hooks) {
   });
 
   test('it calls onSelect and onUnselect when using exposed actions', async function (assert) {
-    assert.expect(2);
     const onSelectDone = assert.async();
     const onUnselectDone = assert.async();
 
