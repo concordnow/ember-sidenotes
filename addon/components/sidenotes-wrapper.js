@@ -28,7 +28,7 @@ export default class SidenotesWrapperComponent extends Component {
 
     this._selectedSidenoteId = this._alignedSidenoteId = this.controlledMode
       ? this.args.selectedSidenoteId
-      : this.args.defaultSidenoteId ?? null;
+      : (this.args.defaultSidenoteId ?? null);
   }
 
   placeNotesDebounce() {
@@ -40,7 +40,7 @@ export default class SidenotesWrapperComponent extends Component {
     const idealPlacement = getNotesIdealPlacement(
       this.notes,
       this._alignedSidenoteId,
-      this.gutter
+      this.gutter,
     );
 
     idealPlacement.forEach(({ top, note: { element } }) => {
@@ -85,7 +85,7 @@ export default class SidenotesWrapperComponent extends Component {
   @action
   onItemsDidChange() {
     this.notes = this.notes.filter(
-      ({ item }) => this.indexOfItem(this.args.items, item) > -1
+      ({ item }) => this.indexOfItem(this.args.items, item) > -1,
     );
 
     this.placeNotesDebounce();

@@ -30,12 +30,12 @@ module('Integration | Component | sidenote', function (hooks) {
       assert.strictEqual(
         this.note.offsetY,
         offsetY,
-        'onRegister receives correct offsetY'
+        'onRegister receives correct offsetY',
       );
       assert.strictEqual(
         this.note.data,
         data,
-        'onRegister receives correct data'
+        'onRegister receives correct data',
       );
       assert.ok(element, 'onRegister receives a truthy element');
 

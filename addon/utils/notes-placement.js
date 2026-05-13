@@ -22,7 +22,7 @@ export function getNotesIdealPlacement(notes, activeNoteId, gutter) {
     const top =
       Math.max(
         prevNote?.top + prevNote?.note.element.offsetHeight + gutter,
-        offsetY
+        offsetY,
       ) || offsetY;
 
     return [...acc, { top, note }];
