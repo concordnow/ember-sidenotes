@@ -48,7 +48,7 @@ jobs:
       - run: npm run test:ember
 
   try-scenarios:
-    name: "Try: ${{ matrix.ember-try-scenario }}"
+    name: 'Try: ${{ matrix.ember-try-scenario }}'
 
     runs-on: ubuntu-latest
 
