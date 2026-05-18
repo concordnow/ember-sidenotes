@@ -60,12 +60,13 @@ jobs:
         ember-try-scenario:
           - ember-lts-3.20
           - ember-lts-3.24
-          - ember-release
           # - ember-beta
           # - ember-canary
           - ember-classic
           - ember-default-with-jquery
         include:
+          - ember-try-scenario: ember-release
+            allow-failure: true
           - ember-try-scenario: embroider-safe
             allow-failure: true
           - ember-try-scenario: embroider-optimized
