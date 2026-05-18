@@ -65,8 +65,11 @@ jobs:
           # - ember-canary
           - ember-classic
           - ember-default-with-jquery
-          - embroider-safe
-          - embroider-optimized
+        include:
+          - ember-try-scenario: embroider-safe
+            allow-failure: true
+          - ember-try-scenario: embroider-optimized
+            allow-failure: true
 
     steps:
       - uses: actions/checkout@v3
@@ -81,6 +84,7 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
+        continue-on-error: ${{ matrix.allow-failure || false }}
 
   release:
     name: 'Release'

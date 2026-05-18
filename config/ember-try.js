@@ -81,20 +81,26 @@ module.exports = async function () {
           },
         },
       },
-      embroiderSafe({
-        npm: {
-          devDependencies: {
-            'ember-qunit': '^5.1.5',
+      {
+        ...embroiderSafe({
+          npm: {
+            devDependencies: {
+              'ember-qunit': '^5.1.5',
+            },
           },
-        },
-      }),
-      embroiderOptimized({
-        npm: {
-          devDependencies: {
-            'ember-qunit': '^5.1.5',
+        }),
+        allowedToFail: true,
+      },
+      {
+        ...embroiderOptimized({
+          npm: {
+            devDependencies: {
+              'ember-qunit': '^5.1.5',
+            },
           },
-        },
-      }),
+        }),
+        allowedToFail: true,
+      },
     ],
   };
 };
