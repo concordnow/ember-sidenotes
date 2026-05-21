@@ -92,6 +92,7 @@
   },
   "overrides": {
     "ember-source": "$ember-source",
+    "ember-modifier": "^3.2.7",
     "@babel/runtime": "^7.26.10",
     "ansi-html": "^0.0.9",
     "braces": "^3.0.3",
