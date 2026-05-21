@@ -3,7 +3,7 @@
   ...attributes
   {{did-insert this.onDidInsert @id @offsetY @data}}
   {{did-update this.onDidInsert @id @offsetY @data}}
-  {{observe-resize (fn @onResize @id)}}
+  {{on-resize (fn @onResize @id)}}
 >{{yield
     (hash
       isActive=this.isActive
