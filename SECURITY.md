@@ -17,14 +17,7 @@ Vulnerabilities reported by `npm audit` against transitive packages outside this
 
 ## Accepted dev-only advisories
 
-The advisories listed below are documented as accepted because they live in dev-time tooling chains that cannot be patched without either upgrading `ember-source` past `~3.28` (out of scope for this addon today) or breaking an internal API contract in the dependency tree. State as of 2026-05-13.
-
-### High
-
-| Package | Path | Why not fixed |
-|---|---|---|
-| `undici` | `release-it@19 → undici` | Fixed in `release-it@20`, which requires Node `^20.19 \|\| ^22.13 \|\| >=24`. We pin Node 20.20.2; bumping is a separate follow-up. |
-| `release-it` | direct devDep | Same root cause — the advisory tracks the `undici` exposure. |
+The advisories listed below are documented as accepted because they live in dev-time tooling chains that cannot be patched without either upgrading `ember-source` past `~3.28` (out of scope for this addon today) or breaking an internal API contract in the dependency tree. State as of 2026-05-25.
 
 ### Moderate
 
@@ -45,16 +38,15 @@ Patching any of these requires either upgrading `ember-source` (out of scope) or
 
 ## Mitigations already in place
 
-- `release-it@15` was bumped to `^19` to drop the entire `vm2` chain (15 critical advisories).
+- `release-it@15` was bumped to `^19` to drop the entire `vm2` chain (15 critical advisories), then to `^20` to drop the `undici@6` chain (3 advisories — 1 high, 2 moderate).
 - `npm overrides` pin safer versions of `braces`, `micromatch`, `ansi-html`, `markdown-it`, and `@babel/runtime` in the tree.
 - Node has been bumped to 20 LTS so the dev toolchain runs on a supported runtime.
 
-`npm audit` now reports 43 vulnerabilities (0 critical, 2 high, 4 moderate, 37 low), down from 120 (6 critical, 38 high) before this work.
+After the `release-it@20` bump, `npm audit` reports 0 high advisories. Remaining advisories sit in the `ember-cli@3.28` toolchain (moderate: `uuid`, `got`, `qs`, `ws`; low: `tmp`, `clean-css`, plus `ember-cli-babel@7` deprecation cascades).
 
 ## Reviewing this list
 
 The list above should be re-evaluated when any of the following happens:
 
 - `ember-source` is bumped past `~3.28` (unblocks a large fraction of the cascades).
-- Node moves to `>=22.13` (unblocks `release-it@20` and the `undici` fix).
 - A consumer reports a concrete exploit path against runtime code.
