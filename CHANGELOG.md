@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Replace unmaintained `ember-resize-observer-modifier` with `ember-on-resize-modifier` (#270)
+
 ## [1.3.1] - 2022-08-11
 
 ### Fixed
