@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-05-26
+
 ### Changed
 
 - **BREAKING:** Drop support for Node < 20. Minimum is now `^20.9.0 || >=22.0.0`
@@ -57,7 +59,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - First implementation
 
-[unreleased]: https://github.com/concordnow/ember-sidenotes/compare/v1.3.1...HEAD
+[Unreleased]: https://github.com/concordnow/ember-sidenotes/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/concordnow/ember-sidenotes/compare/v1.3.1...v2.0.0
 [1.3.1]: https://github.com/concordnow/ember-sidenotes/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/concordnow/ember-sidenotes/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/concordnow/ember-sidenotes/compare/v1.1.0...v1.2.0
