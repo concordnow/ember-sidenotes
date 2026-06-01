@@ -6,14 +6,16 @@ If you discover a vulnerability that affects consumers of this addon at runtime,
 
 ## Runtime surface
 
-`ember-sidenotes` ships a small Ember addon. The consumer's application bundle only includes the addon's own source (`addon/`) plus its declared runtime `dependencies`:
+`ember-sidenotes` ships a small Ember addon. The consumer's application bundle includes the addon's own source (`addon/`) plus its declared runtime `dependencies`:
 
 - `@ember/render-modifiers`
 - `ember-cli-babel`
 - `ember-cli-htmlbars`
-- `ember-resize-observer-modifier`
+- `ember-on-resize-modifier`
 
-Vulnerabilities reported by `npm audit` against transitive packages outside this list affect a developer's build/test/release environment, not the application at runtime.
+Some of those packages pull their own runtime dependencies into the consumer's bundle. The notable one is `ember-on-resize-modifier`, which depends on `ember-resize-observer-service` (the shared `ResizeObserver` instance) — it therefore also ships at runtime and is part of this surface.
+
+Outside the addon's direct runtime dependencies and their runtime-shipped transitive deps, packages reported by `npm audit` belong to a developer's build/test/release tooling, not the application at runtime.
 
 ## Accepted dev-only advisories
 
