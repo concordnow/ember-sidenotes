@@ -93,11 +93,13 @@
   "overrides": {
     "ember-source": "$ember-source",
     "ember-modifier": "^3.2.7",
+    "@babel/core": "^7.29.6",
     "@babel/runtime": "^7.26.10",
     "ansi-html": "^0.0.9",
     "braces": "^3.0.3",
     "markdown-it": "^14.2.0",
     "micromatch": "^4.0.8",
-    "tmp": "^0.2.6"
+    "tmp": "^0.2.6",
+    "undici": "^7.28.0"
   }
 }
