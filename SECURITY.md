@@ -19,36 +19,42 @@ Outside the addon's direct runtime dependencies and their runtime-shipped transi
 
 ## Accepted dev-only advisories
 
-The advisories listed below are documented as accepted because they live in dev-time tooling chains that cannot be patched without either upgrading `ember-source` past `~3.28` (out of scope for this addon today) or breaking an internal API contract in the dependency tree. State as of 2026-05-25.
+The advisories listed below are documented as accepted because they live in dev/build/test tooling chains, not in the consumer's runtime bundle. State as of 2026-06-23: `npm audit` reports 14 advisories (3 high, 7 moderate, 4 low) and **none of them reach the runtime surface described above**.
+
+Patching most of them requires either upgrading `ember-source` past `~3.28` (out of scope for this addon today) or overriding a deeply nested transitive with a version whose API breaks its immediate parent.
+
+### High — test runner websocket stack
+
+| Package | Path | Why not fixed |
+|---|---|---|
+| `ws` | `testem → socket.io → engine.io → ws` | Memory-exhaustion DoS. `ws` only runs inside the `testem` socket server during `ember test`. No attacker-controlled traffic on a developer machine; never shipped to consumers. |
+| `engine.io`, `socket.io-adapter` | `testem → socket.io → …` | Same `testem` websocket stack. Bumping requires a newer `socket.io`/`testem` major than the Ember 3.28 test stack pins. |
 
 ### Moderate
 
 | Package | Path | Why not fixed |
 |---|---|---|
-| `got` | `ember-try-config@4 → package-json@6 → got@9` | `got@11+` removed the callback API that `package-json@6` relies on. Overriding `got` breaks the ember-try matrix runner. |
-| `package-json`, `ember-try-config`, `ember-try` | Same chain | All trace back to the `got@9` exposure above. |
+| `got`, `package-json`, `ember-try-config`, `ember-try` | `ember-try → ember-try-config → package-json@6 → got@9` | `got@11+` removed the callback API that `package-json@6` relies on. Overriding `got` breaks the ember-try matrix runner. |
+| `ember-cli` | build toolchain | Pinned to the `~3.28` line; bumping out is the `ember-source` upgrade tracked below. |
+| `js-yaml` | `ember-cli → js-yaml` | Quadratic-complexity DoS on merge keys; parses only repo-local config at build time. |
+| `uuid` | `ember-cli → uuid` | Missing buffer bounds check in the `buf`-argument path, which the build tooling does not use. |
 
-### Low (37)
+### Low — clean-css build chain
 
-The 37 low-severity advisories are mostly cascades from three root causes inside the Ember 3.28 build toolchain:
-
-- `tmp <= 0.2.3` (symlink arbitrary write) — pulled in by `can-symlink`, `watch-detector`, `external-editor`, and `fixturify-project`. None of these run with attacker-controlled input on a developer machine.
-- `clean-css <= 4.1.11` (ReDoS) — used by `broccoli-clean-css`/`ember-cli-preprocess-registry` at build time only.
-- `ember-cli-babel@7` deprecation cascade — flagged because `ember-cli-babel@8` exists, but `@8` requires `ember-source@>=4`. We stay on `~3.28`.
-
-Patching any of these requires either upgrading `ember-source` (out of scope) or overriding deeply nested transitives with a version whose API breaks the immediate parent. The practical exploit surface for these advisories on a developer's machine is negligible.
+The 4 low-severity advisories all cascade from `clean-css <= 4.1.11` (ReDoS), pulled in by `broccoli-clean-css` / `clean-css-promise` / `ember-cli-preprocess-registry` at build time only. Patching requires a `broccoli-clean-css` major that the Ember 3.28 preprocess registry does not accept.
 
 ## Mitigations already in place
 
 - `release-it@15` was bumped to `^19` to drop the entire `vm2` chain (15 critical advisories), then to `^20` to drop the `undici@6` chain (3 advisories — 1 high, 2 moderate).
-- `npm overrides` pin safer versions of `braces`, `micromatch`, `ansi-html`, `markdown-it`, and `@babel/runtime` in the tree.
+- `npm overrides` pin safer versions across the tree: `@babel/core`, `@babel/runtime`, `ember-modifier`, `ansi-html`, `braces`, `markdown-it`, `micromatch`, `tmp`, and `undici`. The `tmp` override (`^0.2.6`) clears the former symlink-write advisory, and the `undici` override (`^7`) keeps the `release-it` chain off the vulnerable `undici@6` line.
 - Node has been bumped to 20 LTS so the dev toolchain runs on a supported runtime.
 
-After the `release-it@20` bump, `npm audit` reports 0 high advisories. Remaining advisories sit in the `ember-cli@3.28` toolchain (moderate: `uuid`, `got`, `qs`, `ws`; low: `tmp`, `clean-css`, plus `ember-cli-babel@7` deprecation cascades).
+The remaining advisories all sit in the `ember-cli@3.28` build/test toolchain. The 3 high advisories are confined to the `testem` websocket server used during `ember test`; they have appeared since the previous review and are accepted as dev/test-only, not silently ignored.
 
 ## Reviewing this list
 
 The list above should be re-evaluated when any of the following happens:
 
-- `ember-source` is bumped past `~3.28` (unblocks a large fraction of the cascades).
+- `ember-source` is bumped past `~3.28` (unblocks a large fraction of the cascades, including the `testem`/`socket.io` stack).
 - A consumer reports a concrete exploit path against runtime code.
+- A new `npm audit` advisory lands outside the dev/build/test chains documented above.
