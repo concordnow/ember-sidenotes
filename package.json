@@ -44,7 +44,7 @@
     "@eslint/js": "^9.39.4",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
-    "@release-it/keep-a-changelog": "^7.0.0",
+    "@release-it/keep-a-changelog": "^8.0.0",
     "broccoli-asset-rev": "^3.0.0",
     "ember-auto-import": "^2.2.4",
     "ember-cli": "~3.28.3",
@@ -75,7 +75,7 @@
     "prettier": "^3.8.3",
     "qunit": "^2.16.0",
     "qunit-dom": "^2.0.0",
-    "release-it": "^20.0.1",
+    "release-it": "^21.0.1",
     "webpack": "^5.64.2"
   },
   "engines": {
